@@ -143,7 +143,7 @@
  env.allowLocalModels = false;
  env.useBrowserCache = true;
 
- pipe = await pipeline('text-generation', 'Xenova/gpt2', {
+ pipe = await pipeline('text-generation', 'Xenova/llama-160m', {
  progress_callback: (p) => {
   if (p.status === 'progress' && p.progress != null) {
   const pct = Math.min(Math.round(p.progress), 99);
