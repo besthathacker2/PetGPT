@@ -1,0 +1,234 @@
+
+
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+ .pg { font-family: 'Nunito', sans-serif; padding: 1rem 0; }
+ .hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+ .logo { width: 46px; height: 46px; border-radius: 14px; background: #3d9960; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+ .ttl { font-family: 'Fredoka One', cursive; font-size: 26px; color: #2E7D4F; margin: 0; line-height: 1; }
+ .sub { font-size: 12px; color: var(--color-text-secondary); margin: 2px 0 0; }
+ .bdg { margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 700; border: 0.5px solid; white-space: nowrap; }
+ .bdg-l { background: #fef9ec; color: #b07800; border-color: #f0c050; }
+ .bdg-r { background: #e8f5ee; color: #2E7D4F; border-color: #a0d4b4; }
+ .bdg-e { background: #fcebeb; color: #a32d2d; border-color: #f09595; }
+ .mrow { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--color-text-secondary); }
+ .dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+ .dot.on { background: #4CAF72; }
+ .dot.ld { background: #f0a500; animation: bl 1s infinite; }
+ .dot.er { background: #e24b4a; }
+ @keyframes bl { 0%,100%{opacity:1} 50%{opacity:.3} }
+ .pw { flex: 1; height: 4px; background: var(--color-border-tertiary); border-radius: 4px; overflow: hidden; }
+ .pb { height: 100%; background: #4CAF72; border-radius: 4px; width: 0; transition: width .4s; }
+ .cbox { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; min-height: 200px; max-height: 300px; overflow-y: auto; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; }
+ .msg { display: flex; gap: 8px; align-items: flex-start; }
+ .msg.u { flex-direction: row-reverse; }
+ .av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; background: #3d9960; }
+ .msg.u .av { background: #5b8dee; }
+ .bbl { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 8px 12px; font-size: 14px; line-height: 1.5; max-width: 82%; color: var(--color-text-primary); word-break: break-word; }
+ .msg.u .bbl { background: #5b8dee; border-color: #5b8dee; color: #fff; }
+ .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+ .chip { font-size: 12px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: 20px; padding: 4px 10px; cursor: pointer; color: var(--color-text-secondary); font-family: 'Nunito', sans-serif; transition: background .15s; }
+ .chip:hover { background: #e8f5ee; color: #2E7D4F; border-color: #a0d4b4; }
+ .irow { display: flex; gap: 8px; }
+ .inp { flex: 1; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 14px; font-family: 'Nunito', sans-serif; background: var(--color-background-primary); color: var(--color-text-primary); outline: none; }
+ .inp:focus { border-color: #4CAF72; box-shadow: 0 0 0 2px rgba(76,175,114,.15); }
+ .btn { background: #4CAF72; color: #fff; border: none; border-radius: var(--border-radius-md); padding: 8px 16px; font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; }
+ .btn:hover { background: #3d9960; }
+ .btn:disabled { background: #aaa; cursor: not-allowed; }
+ .st { font-size: 12px; color: var(--color-text-secondary); margin-top: 8px; text-align: center; min-height: 16px; }
+ .typing span { display: inline-block; width: 5px; height: 5px; background: #4CAF72; border-radius: 50%; margin: 0 1px; animation: bp 1.2s infinite; }
+ .typing span:nth-child(2){animation-delay:.2s}
+ .typing span:nth-child(3){animation-delay:.4s}
+ @keyframes bp{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+</style>
+
+<div class="pg">
+ <h2 class="sr-only">PetGPT — AI pet expert powered by GPT-2 in your browser</h2>
+ <div class="hdr">
+ <div class="logo">🐾</div>
+ <div>
+ <p class="ttl">PetGPT</p>
+ <p class="sub">Xenova/gpt2 · ONNX · runs in your browser</p>
+ </div>
+ <span class="bdg bdg-l" id="bdg">Downloading…</span>
+ </div>
+
+ <div class="mrow">
+ <div class="dot ld" id="dot"></div>
+ <div class="pw"><div class="pb" id="pb"></div></div>
+ <span id="ms">Loading GPT-2 model…</span>
+ </div>
+
+ <div class="cbox" id="cb">
+ <div class="msg">
+ <div class="av">🐾</div>
+ <div class="bbl">Hi! I'm PetGPT 🐶🐱 Ask me anything about your pets — dogs, cats, birds, fish, rabbits and more! (Model loading, one moment…)</div>
+ </div>
+ </div>
+
+ <div class="chips">
+ <button class="chip" onclick="q('Why does my dog bark at night?')">🐕 Dog barking</button>
+ <button class="chip" onclick="q('Best food for a senior cat?')">🐱 Cat diet</button>
+ <button class="chip" onclick="q('How to care for a pet rabbit?')">🐰 Rabbit care</button>
+ <button class="chip" onclick="q('Best fish for beginners?')">🐟 Starter fish</button>
+ <button class="chip" onclick="q('How to train a dog to sit?')">🎓 Dog training</button>
+ </div>
+
+ <div class="irow">
+ <input class="inp" id="inp" placeholder="Loading model…" disabled onkeydown="if(event.key==='Enter')send()" />
+ <button class="btn" id="sbtn" onclick="send()" disabled>Ask ↗</button>
+ </div>
+ <div class="st" id="st">Downloading Xenova/gpt2 ONNX weights (~120MB)…</div>
+</div>
+
+<script type="module">
+ const cb = document.getElementById('cb');
+ const inp = document.getElementById('inp');
+ const sbtn = document.getElementById('sbtn');
+ const st = document.getElementById('st');
+ const pb = document.getElementById('pb');
+ const dot = document.getElementById('dot');
+ const ms = document.getElementById('ms');
+ const bdg = document.getElementById('bdg');
+
+ let pipe = null;
+ let busy = false;
+
+ function addMsg(txt, isUser) {
+ const d = document.createElement('div');
+ d.className = 'msg' + (isUser ? ' u' : '');
+ d.innerHTML = `<div class="av">${isUser ? '🧑' : '🐾'}</div><div class="bbl">${txt}</div>`;
+ cb.appendChild(d);
+ cb.scrollTop = cb.scrollHeight;
+ }
+
+ function showTyping() {
+ const d = document.createElement('div');
+ d.className = 'msg'; d.id = 'typ';
+ d.innerHTML = `<div class="av">🐾</div><div class="bbl"><span class="typing"><span></span><span></span><span></span></span></div>`;
+ cb.appendChild(d);
+ cb.scrollTop = cb.scrollHeight;
+ }
+
+ function rmTyping() {
+ const el = document.getElementById('typ');
+ if (el) el.remove();
+ }
+
+ function setReady() {
+ dot.className = 'dot on';
+ ms.textContent = 'GPT-2 running in-browser via ONNX';
+ pb.style.width = '100%';
+ bdg.className = 'bdg bdg-r';
+ bdg.textContent = 'GPT-2 Ready ✓';
+ inp.disabled = false;
+ sbtn.disabled = false;
+ inp.placeholder = 'Ask about your pet…';
+ st.textContent = 'Ready! Ask anything about your pets.';
+ inp.focus();
+ }
+
+ function setErr(msg) {
+ dot.className = 'dot er';
+ ms.textContent = 'Failed to load';
+ bdg.className = 'bdg bdg-e';
+ bdg.textContent = 'Error';
+ st.textContent = msg;
+ }
+
+ try {
+ // Use a pinned stable version known to work with Xenova/gpt2
+ const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.3/dist/transformers.min.js');
+
+ env.allowLocalModels = false;
+ env.useBrowserCache = true;
+
+ pipe = await pipeline('text-generation', 'Xenova/gpt2', {
+ progress_callback: (p) => {
+  if (p.status === 'progress' && p.progress != null) {
+  const pct = Math.min(Math.round(p.progress), 99);
+  pb.style.width = pct + '%';
+  ms.textContent = `Downloading… ${pct}%`;
+  }
+  if (p.status === 'ready') setReady();
+ }
+ });
+
+ if (inp.disabled) setReady();
+
+ } catch(e) {
+ console.error('PetGPT error:', e);
+ setErr('Load failed: ' + e.message);
+ }
+
+ const PROMPT = `The following is a conversation with PetGPT, a friendly expert in pet care and veterinary advice with 20 years of experience helping owners of dogs, cats, birds, fish, and rabbits.
+
+
+
+Human: `;
+
+ window.q = (t) => { if (!pipe || busy) return; inp.value = t; send(); };
+
+ window.send = async () => {
+ if (!pipe || busy || !inp.value.trim()) return;
+ const question = inp.value.trim();
+ inp.value = '';
+ busy = true;
+ inp.disabled = true;
+ sbtn.disabled = true;
+
+ addMsg(question, true);
+ showTyping();
+ st.textContent = 'PetGPT is thinking…';
+
+ try {
+ const fullPrompt = PROMPT + question + '
+
+PetGPT:';
+ const result = await pipe(fullPrompt, {
+  max_new_tokens: 120,
+  do_sample: true,
+  temperature: 0.8,
+  top_k: 50,
+  top_p: 0.9,
+  repetition_penalty: 1.3,
+ });
+
+ rmTyping();
+ let reply = result[0].generated_text.slice(fullPrompt.length).trim();
+
+ // Clean up reply at first stop token
+ for (const stop of ['
+
+Human:', '
+
+PetGPT:', '
+
+
+
+
+
+', 'Human:']) {
+  const i = reply.indexOf(stop);
+  if (i > 0) reply = reply.slice(0, i).trim();
+ }
+
+ if (!reply || reply.length < 6) {
+  reply = 'Great question! Every pet is unique — for personalised advice I always recommend checking with your local vet. 🐾';
+ }
+
+ addMsg(reply, false);
+ st.textContent = '';
+ } catch(e) {
+ rmTyping();
+ addMsg('Sorry, something went wrong! Please try again. 🐾', false);
+ st.textContent = 'Error: ' + e.message;
+ console.error(e);
+ }
+
+ busy = false;
+ inp.disabled = false;
+ sbtn.disabled = false;
+ inp.focus();
+ };
+</script>
